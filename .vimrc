@@ -54,6 +54,7 @@ set ruler
 set showcmd
 set wildmenu
 set scrolloff=10
+set cursorline "the magic cursor line
 
 " Highlight search results
 set hlsearch
@@ -69,8 +70,8 @@ set noswapfile
 " File specific tabbing scheme
 autocmd Filetype c,h setlocal ts=8 sw=8 cindent
 autocmd Filetype cpp,hpp,cxx setlocal ts=2 sw=4 expandtab
-autocmd Filetype python setlocal ts=4 sw=4 noexpandtab
-autocmd Filetype go,html,javascript setlocal ts=2 sw=2 expandtab
+autocmd Filetype python setlocal ts=4 sw=4 softtabstop=4 expandtab autoindent
+autocmd Filetype java,go,html,javascript setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 softtabstop=4 textwidth=80 expandtab
 
@@ -130,8 +131,11 @@ let g:ctrlp_working_path_mode = 'r'
 nmap <leader>p :CtrlP<cr>  " enter file search mode
 
 " Nerdtree
+autocmd VimEnter * NERDTree " open Nerdtree while starting
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 map <C-n> :NERDTreeToggle<CR>  " open and close file tree
 nmap <leader>n :NERDTreeFind<CR>  " open current buffer in file tree
+nmap <leader>r :NERDTreeFocus<CR> \|R \| <c-w><c-p> "custom map for refersh
 
 " Emmet
 let g:user_emmet_mode='a'    "enable all function in all mode.
@@ -167,6 +171,37 @@ let g:ctrlp_custom_ignore = {
 \}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERD Commenter
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Define plugins to install
@@ -186,6 +221,8 @@ Plug 'mattn/emmet-vim'
 Plug 'skammer/vim-css-color'
 " vim javascript
 Plug 'pangloss/vim-javascript'
+" NERD Commenter, Plugins always are easier than self-written functinos XD
+Plug 'preservim/nerdcommenter'
 
 " All of your Plugins must be added before the following line
 call plug#end()
