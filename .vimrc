@@ -1,5 +1,3 @@
-set autoread "set to auto read when a file is changed from the outside
-
 " With a map leader it is possible to do extra key combination
 " like <leader>w saves the current file
 let mapleader = ","
@@ -7,10 +5,7 @@ let g:mapleader = ","
 " -----------Buffer Management---------------
 set hidden
 
-" Move to the next buffer
 nmap <leader>l :bnext<CR>
-
-" Move to the previous buffer
 nmap <leader>h :bprevious<CR>
 
 " clear the current highlighting with mapLeader
@@ -23,7 +18,7 @@ nmap <leader>q :bp <BAR> bd #<CR>
 " Show all open buffers and their status
 nmap <leader>bl :ls<CR>
 
-" Copy purpose for Clipboard
+" Copy for Clipboard
 vmap <leader>y "+y
 vmap <leader>p "+p
 
@@ -36,6 +31,7 @@ endif
 
 " Use :help 'option' to see the documentation for the given option.
 " Auto indents based on indentation level.
+set autoread
 set autoindent
 set smartindent
 set backspace=indent,eol,start
@@ -51,7 +47,8 @@ set ruler
 set showcmd
 set wildmenu
 set scrolloff=10
-set cursorline "the magic cursor line
+set nobackup
+set nowrap
 
 " Highlight search results
 set hlsearch
@@ -66,15 +63,9 @@ set magic
 " File specific tabbing scheme
 autocmd Filetype c,h setlocal ts=8 sw=8 cindent
 autocmd Filetype cpp,hpp setlocal ts=2 sw=4 expandtab
-autocmd Filetype python setlocal ts=4 sw=4 softtabstop=4 expandtab autoindent
-autocmd Filetype java,go,html,javascript setlocal ts=2 sw=2 expandtab
+autocmd Filetype java,go,javascript,python setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 softtabstop=4 textwidth=80 expandtab
-autocmd Filetype html, css EmmetInstall
-
-" trailing space
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:match ExtraWhitespace /\s\+$/
 
 if &encoding ==# 'latin1' && has('gui_running')
 	set encoding=utf-8
@@ -195,7 +186,30 @@ let g:NERDToggleCheckAllLines = 1
 highlight ExtraWhitespace ctermbg=red
 
 " emmet
-let g:user_emmet_install_global = 0
+"let g:user_emmet_install_global = 0
+"let g:user_emmet_mode='a'    "enable all function in all mode.
+let g:user_emmet_leader_key='<Tab>'
+
+let g:user_emmet_settings = {
+\  'variables': {'lang': 'ja'},
+\  'html': {
+\    'default_attributes': {
+\      'option': {'value': v:null},
+\      'textarea': {'id': v:null, 'name': v:null, 'cols': 10, 'rows': 10},
+\    },
+\    'snippets': {
+\      'html:5': "<!DOCTYPE html>\n"
+\              ."<html lang=\"${lang}\">\n"
+\              ."<head>\n"
+\              ."\t<meta charset=\"${charset}\">\n"
+\              ."\t<title></title>\n"
+\              ."\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+\              ."</head>\n"
+\              ."<body>\n\t${child}|\n</body>\n"
+\              ."</html>",
+\    },
+\  },
+\}
 
 " tag along
 let g:tagalong_verbose = 1
@@ -245,7 +259,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " emmet vim
 Plug 'mattn/emmet-vim'
 
-Plug 'AndrewRadev/tagalong.vim'
+
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 
